@@ -13,7 +13,9 @@ export default function HomeScreen() {
       <View style={[styles.mapContainer, { flex: 1 }]}>
         <MapArea />
       </View>
+      <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
       <BottomPullable />
+      </View>
     </View>
   );
 }

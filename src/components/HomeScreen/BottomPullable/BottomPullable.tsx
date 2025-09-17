@@ -16,10 +16,8 @@ export default function BottomPullable() {
       enablePanDownToClose={true}
       handleIndicatorStyle={styles.handle}
     >
-      {" "}
       <View style={styles.content}>
         <Text>Pull up</Text>
-        {/* Later: places / friends / wallet menu items go here */}
       </View>
     </BottomSheet>
   );
