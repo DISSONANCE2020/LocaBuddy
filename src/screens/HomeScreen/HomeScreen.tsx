@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import ProfileHeader from '../../components/HomeScreen/ProfileHeader/ProfileHeader';
 import MapArea from '../../components/HomeScreen/MapArea/MapArea';
@@ -6,6 +6,8 @@ import BottomPullable from '../../components/HomeScreen/BottomPullable/BottomPul
 import styles from './HomeScreen.styles';
 
 export default function HomeScreen() {
+  const [bottomVisible, setBottomVisible] = useState(true);
+
   return (
     <View style={[styles.container, { flex: 1 }]}>
       <StatusBar barStyle="dark-content" />
@@ -14,7 +16,7 @@ export default function HomeScreen() {
         <MapArea />
       </View>
       <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
-      <BottomPullable />
+      <BottomPullable visible={bottomVisible} onClose={() => setBottomVisible(false)}/>
       </View>
     </View>
   );

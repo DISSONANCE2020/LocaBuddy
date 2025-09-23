@@ -1,24 +1,29 @@
-import React, { useRef, useMemo } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import BottomSheet from "@gorhom/bottom-sheet";
+import React from "react";
+import { Modal, TouchableWithoutFeedback, View, Text } from "react-native";
 import styles from "./BottomPullable.styles";
 
+interface BottomPullableProps {
+  visible: boolean;
+  onClose: () => void;
+}
 
-export default function BottomPullable() {
-  const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
+export default function BottomPullable({ visible, onClose }: BottomPullableProps) {
+  console.log("BottomPullable rendered, visible:", visible);
 
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      index={0}
-      snapPoints={snapPoints}
-      enablePanDownToClose={true}
-      handleIndicatorStyle={styles.handle}
+    <Modal
+      visible={visible}
+      transparent
+      animationType="slide"
+      onRequestClose={onClose}
     >
-      <View style={styles.content}>
-        <Text>Pull up</Text>
+
+      <View style={[styles.sheet, { height: 200 }]}>
+        <View style={styles.handle} />
+        <View style={styles.content}>
+          <Text>Unfinished</Text>
+        </View>
       </View>
-    </BottomSheet>
+    </Modal>
   );
 }
