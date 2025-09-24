@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+  
   sheet: {
     position: "absolute",
     left: 0,
@@ -12,7 +13,6 @@ export default StyleSheet.create({
     paddingTop: 12,
     paddingHorizontal: 16,
     elevation: 10,
-    zIndex: 1000,
   },
   handle: {
     width: 40,
