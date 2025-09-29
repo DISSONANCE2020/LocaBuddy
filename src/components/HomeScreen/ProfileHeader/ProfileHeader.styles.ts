@@ -2,22 +2,28 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
     height: 132,
     flexDirection: "row",
     alignItems: "flex-end",
     paddingHorizontal: 16,
     paddingBottom: 12,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "transparent",
+    zIndex: 10,
   },
   content: {
-    height: 80,
+    height: 72,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     padding: 16,
     flex: 1,
+    borderWidth: 2,
     borderRadius: 100,
-    // backgroundColor: "#ff0000ff",
+    borderColor: "#ffffffff",
   },
   avatar: {
     width: 48,
@@ -31,7 +37,6 @@ export default StyleSheet.create({
     justifyContent: "center",
     marginLeft: 12,
     flex: 1,
-    // backgroundColor: "#0011ffff",
   },
   username: {
     fontSize: 18,
