@@ -44,7 +44,6 @@ export default StyleSheet.create({
     color: "#ffffffff",
   },
   levelRow: {
-    marginTop: 4,
     flexDirection: "row",
     alignItems: "center",
   },
