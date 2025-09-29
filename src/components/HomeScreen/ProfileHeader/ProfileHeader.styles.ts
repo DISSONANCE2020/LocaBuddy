@@ -2,24 +2,41 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
+    height: 132,
+    flexDirection: "row",
+    alignItems: "flex-end",
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    backgroundColor: "#f8f8f8",
+  },
+  content: {
     height: 80,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    backgroundColor: "#f8f8f8",
+    justifyContent: "center",
+    padding: 16,
+    flex: 1,
+    borderRadius: 100,
+    // backgroundColor: "#ff0000ff",
   },
   avatar: {
-    width: 50,
-    height: 50,
+    width: 48,
+    height: 48,
     borderRadius: 25,
+    backgroundColor: "#ffffffff",
   },
   info: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
     marginLeft: 12,
     flex: 1,
+    // backgroundColor: "#0011ffff",
   },
   username: {
     fontSize: 18,
     fontWeight: "600",
+    color: "#ffffffff",
   },
   levelRow: {
     marginTop: 4,
@@ -30,6 +47,7 @@ export default StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     marginRight: 8,
+    color: "#ffffffff",
   },
   expBarBackground: {
     flex: 1,
@@ -39,8 +57,8 @@ export default StyleSheet.create({
     overflow: "hidden",
   },
   expBarFill: {
-    width: "50%", 
+    width: "50%",
     height: "100%",
-    backgroundColor: "#4caf50",
+    backgroundColor: "#ffc400ff",
   },
 });
