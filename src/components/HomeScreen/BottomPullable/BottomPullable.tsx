@@ -1,14 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  Dimensions,
-  Animated,
-  PanResponder,
-} from "react-native";
+import { Modal, Dimensions, Animated, PanResponder } from "react-native";
 import styles from "./BottomPullable.styles";
 import SheetTopper from "../../ReusableComponents/SheetTopper/SheetTopper";
+import SheetContent from "../../ReusableComponents/SheetContent/SheetContent";
 
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.33;
@@ -97,9 +91,14 @@ export default function BottomPullable({
         {...panResponder.panHandlers}
       >
         <SheetTopper />
-        <View style={styles.content}>
-          <Text>{isExpanded ? "Expanded" : "Default"}</Text>
-        </View>
+        <SheetContent label='Places' />
+        <SheetContent label='Friends' />
+        {isExpanded && (
+          <>
+            <SheetContent label='Wallet' />
+            <SheetContent label='Settings' />
+          </>
+        )}
       </Animated.View>
     </Modal>
   );
