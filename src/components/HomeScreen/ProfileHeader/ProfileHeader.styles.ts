@@ -56,7 +56,7 @@ export default StyleSheet.create({
   expBarBackground: {
     flex: 1,
     height: 6,
-    backgroundColor: "#ddd",
+    backgroundColor: "#ffffffff",
     borderRadius: 3,
     overflow: "hidden",
   },
