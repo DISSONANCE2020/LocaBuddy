@@ -6,7 +6,7 @@ import SheetContent from "../../ReusableComponents/SheetContent/SheetContent";
 
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.33;
-const EXPANDED_HEIGHT = height * 0.5;
+const EXPANDED_HEIGHT = height * 0.66;
 
 interface BottomPullableProps {
   visible: boolean;
