@@ -4,7 +4,8 @@ export default StyleSheet.create({
   sheetTopper: {
     borderRadius: 32,
     height: 120,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
   },
   handle: {
     width: 40,
