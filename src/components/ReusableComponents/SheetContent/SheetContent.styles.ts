@@ -32,26 +32,5 @@ export default StyleSheet.create({
     fontWeight: "400",
     color: "#000000ff",
   },
-  locationDetails: {
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
-  locationText: {
-    fontSize: 12,
-    fontWeight: "500",
-    marginRight: 8,
-    color: "#ffffffff",
-  },
-  expBarBackground: {
-    flex: 1,
-    height: 6,
-    backgroundColor: "#ddd",
-    borderRadius: 3,
-    overflow: "hidden",
-  },
-  expBarFill: {
-    width: "50%",
-    height: "100%",
-    backgroundColor: "#ffc400ff",
-  },
+
 });

@@ -47,16 +47,4 @@ export default StyleSheet.create({
     marginRight: 8,
     color: "#ffffffff",
   },
-  expBarBackground: {
-    flex: 1,
-    height: 6,
-    backgroundColor: "#ddd",
-    borderRadius: 3,
-    overflow: "hidden",
-  },
-  expBarFill: {
-    width: "50%",
-    height: "100%",
-    backgroundColor: "#ffc400ff",
-  },
 });
