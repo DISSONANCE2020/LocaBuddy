@@ -5,8 +5,8 @@ import SheetTopper from "../../ReusableComponents/SheetTopper/SheetTopper";
 import SheetContent from "../../ReusableComponents/SheetContent/SheetContent";
 
 const { height } = Dimensions.get("window");
-const COLLAPSED_HEIGHT = height * 0.33;
-const EXPANDED_HEIGHT = height * 0.66;
+const COLLAPSED_HEIGHT = height * 0.35;
+const EXPANDED_HEIGHT = height * 0.65;
 
 interface BottomPullableProps {
   visible: boolean;
@@ -80,19 +80,19 @@ export default function BottomPullable({
   if (!visible) return null;
 
   return (
-      <Animated.View
-        style={[styles.sheet, { height: animatedHeight }]}
-        {...panResponder.panHandlers}
-      >
-        <SheetTopper />
-        <SheetContent label='Places' />
-        <SheetContent label='Friends' />
-        {isExpanded && (
-          <>
-            <SheetContent label='Wallet' />
-            <SheetContent label='Settings' />
-          </>
-        )}
-      </Animated.View>
+    <Animated.View
+      style={[styles.sheet, { height: animatedHeight }]}
+      {...panResponder.panHandlers}
+    >
+      <SheetTopper />
+      <SheetContent label="Places" />
+      <SheetContent label="Friends" />
+      {isExpanded && (
+        <>
+          <SheetContent label="Wallet" />
+          <SheetContent label="Settings" />
+        </>
+      )}
+    </Animated.View>
   );
 }
