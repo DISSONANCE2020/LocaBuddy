@@ -80,12 +80,6 @@ export default function BottomPullable({
   if (!visible) return null;
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType='none'
-      onRequestClose={onClose}
-    >
       <Animated.View
         style={[styles.sheet, { height: animatedHeight }]}
         {...panResponder.panHandlers}
@@ -100,6 +94,5 @@ export default function BottomPullable({
           </>
         )}
       </Animated.View>
-    </Modal>
   );
 }
