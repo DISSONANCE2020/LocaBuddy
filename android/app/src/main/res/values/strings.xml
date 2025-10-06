@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">LocaBuddy</string>
+  <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
+  <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+  <string name="mapbox_access_token">pk.eyJ1IjoiZ2FiLWNyeiIsImEiOiJjbWc5MWdjeHUwNmQ4MmxxdGRyN241NGRlIn0.oKdv-9dfjqOJsRzK2M_OLQ</string>
+</resources>
