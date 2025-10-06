@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Dimensions, Animated, PanResponder } from "react-native";
 import styles from "./BottomPullable.styles";
-import SheetTopper from "../../ReusableComponents/SheetTopper/SheetTopper";
-import PlacesContent from "../../ReusableComponents/SheetTopper/Content/Places/PlacesContent";
-import DefaultContent from "../../ReusableComponents/SheetTopper/Content/Default/DefaultContent";
-import SheetRow from "../../ReusableComponents/SheetRow/SheetRow";
+import SheetTopper from "./Components/SheetTopper/SheetTopper";
+import PlacesContent from "./Panels/Places/PlacesContent";
+import DefaultContent from "./Panels/Default/DefaultContent";
+import SheetRow from "./Components/SheetRow/SheetRow";
 
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.36;

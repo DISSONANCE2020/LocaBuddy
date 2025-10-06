@@ -3,7 +3,7 @@ import { View, Text, Image, Pressable } from "react-native";
 import styles from "./PlacesContent.styles";
 
 const icons = {
-  backArrow: require("../../../../../../assets/icons/ArrowBackIcon.png"),
+  backArrow: require("../../../../../../../../assets/icons/ArrowBackIcon.png"),
 };
 
 interface PlacesContentProps {
