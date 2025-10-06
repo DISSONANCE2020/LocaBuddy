@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Modal, Dimensions, Animated, PanResponder } from "react-native";
+import { Dimensions, Animated, PanResponder } from "react-native";
 import styles from "./BottomPullable.styles";
 import SheetTopper from "../../ReusableComponents/SheetTopper/SheetTopper";
+import PlacesContent from "../../ReusableComponents/SheetTopper/Content/Places/PlacesContent";
 import DefaultContent from "../../ReusableComponents/SheetTopper/Content/Default/DefaultContent";
 import SheetRow from "../../ReusableComponents/SheetRow/SheetRow";
 
@@ -16,7 +17,7 @@ interface BottomPullableProps {
 
 // Each sheet content item with icon and label (NEW)
 
-type Panel = "places" | "friends" | "wallet" | "settings";
+type Panel = "default" | "places" | "friends" | "wallet" | "settings";
 
 const icons = {
   places: require("../../../../assets/icons/PlaceIcon.png"),
@@ -30,7 +31,7 @@ export default function BottomPullable({
   onClose,
 }: BottomPullableProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selected, setSelected] = useState<Panel>("places");
+  const [selected, setSelected] = useState<Panel>("default");
   const animatedHeight = useRef(new Animated.Value(COLLAPSED_HEIGHT)).current;
 
   useEffect(() => {
@@ -98,13 +99,19 @@ export default function BottomPullable({
       {...panResponder.panHandlers}
     >
       <SheetTopper>
-        <DefaultContent />
+        {selected === "places" ? (
+          <PlacesContent onBack={() => setSelected("default")} />
+        ) : (
+          <DefaultContent />
+        )}
       </SheetTopper>
-            <SheetRow
+      <SheetRow
         label='Places'
         icon={icons.places}
         selected={selected === "places"}
-        onPress={() => setSelected("places")}
+        onPress={() => {
+          setSelected("places");
+        }}
       />
       <SheetRow
         label='Friends'

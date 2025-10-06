@@ -9,19 +9,19 @@ import {
 import styles from "./SheetRow.styles";
 import { LinearGradient } from "expo-linear-gradient";
 
-interface SheetContentProps {
+interface SheetRowProps {
   label: string;
   icon: ImageSourcePropType;
   onPress?: () => void;
   selected?: boolean;
 }
 
-export default function sheetContent({
+export default function SheetRow({
   label,
   icon,
   onPress,
   selected
-}: SheetContentProps) {
+}: SheetRowProps) {
   return (
     <Pressable
       onPress={onPress}

@@ -7,7 +7,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "./SheetTopper.styles";
 
-export default function sheetTopper({children} : { children?: ReactNode }) {
+export default function SheetTopper({ children }: { children?: ReactNode }) {
   return (
     <LinearGradient
       colors={["#11998E", "#38EF7D"]}
@@ -16,9 +16,7 @@ export default function sheetTopper({children} : { children?: ReactNode }) {
       style={styles.sheetTopper}
     >
       <View style={styles.handle} />
-      <View style={styles.sheetTopperContent}>
-        {children}
-      </View>
+      <View style={styles.content}>{children}</View>
     </LinearGradient>
   );
 }

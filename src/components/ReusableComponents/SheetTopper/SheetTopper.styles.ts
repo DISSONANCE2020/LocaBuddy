@@ -15,8 +15,8 @@ export default StyleSheet.create({
     alignSelf: "center",
     marginBottom: 8,
   },
-  sheetTopperContent: {
-    flexDirection: "row",
+  content: {
+    flexDirection: "column",
     alignItems: "center",
   },
   avatar: {
