@@ -14,7 +14,7 @@ export default StyleSheet.create({
     flexDirection: "row",
   },
 
-  avatar: {
+  icon: {
     width: 48,
     height: 48,
     borderRadius: 100,
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  avatarImage: {
+  iconImage: {
   width: "60%",
   height: "60%",
   resizeMode: "contain",

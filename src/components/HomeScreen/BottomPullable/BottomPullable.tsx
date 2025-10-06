@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { Modal, Dimensions, Animated, PanResponder } from "react-native";
 import styles from "./BottomPullable.styles";
 import SheetTopper from "../../ReusableComponents/SheetTopper/SheetTopper";
-import SheetContent from "../../ReusableComponents/SheetContent/SheetContent";
+import DefaultContent from "../../ReusableComponents/SheetTopper/Content/Default/DefaultContent";
+import SheetRow from "../../ReusableComponents/SheetRow/SheetRow";
 
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.36;
@@ -13,11 +14,23 @@ interface BottomPullableProps {
   onClose: () => void;
 }
 
+// Each sheet content item with icon and label (NEW)
+
+type Panel = "places" | "friends" | "wallet" | "settings";
+
+const icons = {
+  places: require("../../../../assets/icons/PlaceIcon.png"),
+  friends: require("../../../../assets/icons/FriendsIcon.png"),
+  wallet: require("../../../../assets/icons/WalletIcon.png"),
+  settings: require("../../../../assets/icons/SettingsIcon.png"),
+};
+
 export default function BottomPullable({
   visible,
   onClose,
 }: BottomPullableProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selected, setSelected] = useState<Panel>("places");
   const animatedHeight = useRef(new Animated.Value(COLLAPSED_HEIGHT)).current;
 
   useEffect(() => {
@@ -32,8 +45,8 @@ export default function BottomPullable({
 
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dy) > 5,
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dy) > 12,
 
       onPanResponderMove: (_, gesture) => {
         if (gesture.dy < 0) {
@@ -84,13 +97,35 @@ export default function BottomPullable({
       style={[styles.sheet, { height: animatedHeight }]}
       {...panResponder.panHandlers}
     >
-      <SheetTopper />
-      <SheetContent label="Places" icon={require("../../../../assets/icons/PlaceIcon.png")} />
-      <SheetContent label="Friends" icon={require("../../../../assets/icons/FriendsIcon.png")} />
+      <SheetTopper>
+        <DefaultContent />
+      </SheetTopper>
+            <SheetRow
+        label='Places'
+        icon={icons.places}
+        selected={selected === "places"}
+        onPress={() => setSelected("places")}
+      />
+      <SheetRow
+        label='Friends'
+        icon={icons.friends}
+        selected={selected === "friends"}
+        onPress={() => setSelected("friends")}
+      />
       {isExpanded && (
         <>
-          <SheetContent label="Wallet" icon={require("../../../../assets/icons/WalletIcon.png")} />
-          <SheetContent label="Settings" icon={require("../../../../assets/icons/SettingsIcon.png")} />
+          <SheetRow
+            label='Wallet'
+            icon={icons.wallet}
+            selected={selected === "wallet"}
+            onPress={() => setSelected("wallet")}
+          />
+          <SheetRow
+            label='Settings'
+            icon={icons.settings}
+            selected={selected === "settings"}
+            onPress={() => setSelected("settings")}
+          />
         </>
       )}
     </Animated.View>

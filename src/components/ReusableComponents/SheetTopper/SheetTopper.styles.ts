@@ -17,8 +17,8 @@ export default StyleSheet.create({
   },
   sheetTopperContent: {
     flexDirection: "row",
+    alignItems: "center",
   },
-
   avatar: {
     width: 64,
     height: 64,
