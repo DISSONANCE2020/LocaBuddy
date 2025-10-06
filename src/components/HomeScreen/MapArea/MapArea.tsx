@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View } from "react-native";
 import Mapbox from "@rnmapbox/maps";
 import styles from "./MapArea.styles";
 
@@ -12,7 +12,8 @@ export default function MapArea() {
         style={styles.map}
         styleURL={Mapbox.StyleURL.Street}
         logoEnabled={false}
-        compassEnabled={true}
+        compassEnabled={false}
+        scaleBarEnabled={false}
       >
         <Mapbox.Camera
           zoomLevel={12}
