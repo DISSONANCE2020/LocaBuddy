@@ -1,20 +1,26 @@
 import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import MapView from "react-native-maps";
-import styles from './MapArea.styles';
+import Mapbox from "@rnmapbox/maps";
+import styles from "./MapArea.styles";
+
+const CENTER_COORD: [number, number] = [121.0437, 14.676];
 
 export default function MapArea() {
-  const initialRegion = {
-    latitude: 14.676, // example latitude
-    longitude: 121.0437, // example longitude
-    latitudeDelta: 0.05,
-    longitudeDelta: 0.05,
-  };
-
   return (
     <View style={styles.mapWrapper}>
-      <MapView style={styles.map}
-      initialRegion={initialRegion}/>
+      <Mapbox.MapView
+        style={styles.map}
+        styleURL={Mapbox.StyleURL.Street}
+        logoEnabled={false}
+        compassEnabled={true}
+      >
+        <Mapbox.Camera
+          zoomLevel={12}
+          centerCoordinate={CENTER_COORD}
+          animationMode="flyTo"
+          animationDuration={800}
+        />
+      </Mapbox.MapView>
     </View>
-  )
+  );
 }
