@@ -19,7 +19,14 @@ export default StyleSheet.create({
     height: 48,
     borderRadius: 100,
     backgroundColor: "#11998E",
+    alignItems: "center",
+    justifyContent: "center",
   },
+  avatarImage: {
+  width: "60%",
+  height: "60%",
+  resizeMode: "contain",
+},
   info: {
     flexDirection: "column",
     alignItems: "flex-start",

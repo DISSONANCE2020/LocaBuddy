@@ -6,7 +6,7 @@ import SheetContent from "../../ReusableComponents/SheetContent/SheetContent";
 
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.36;
-const EXPANDED_HEIGHT = height * 0.6;
+const EXPANDED_HEIGHT = height * 0.54;
 
 interface BottomPullableProps {
   visible: boolean;
@@ -85,12 +85,12 @@ export default function BottomPullable({
       {...panResponder.panHandlers}
     >
       <SheetTopper />
-      <SheetContent label="Places" />
-      <SheetContent label="Friends" />
+      <SheetContent label="Places" icon={require("../../../../assets/icons/PlaceIcon.png")} />
+      <SheetContent label="Friends" icon={require("../../../../assets/icons/FriendsIcon.png")} />
       {isExpanded && (
         <>
-          <SheetContent label="Wallet" />
-          <SheetContent label="Settings" />
+          <SheetContent label="Wallet" icon={require("../../../../assets/icons/WalletIcon.png")} />
+          <SheetContent label="Settings" icon={require("../../../../assets/icons/SettingsIcon.png")} />
         </>
       )}
     </Animated.View>
