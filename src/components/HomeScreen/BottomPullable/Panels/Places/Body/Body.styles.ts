@@ -1,22 +1,18 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  content: {
-    marginTop: 12,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  arrow: {
-    width: 42,
-    height: 42,
-  },
   info: {
-    marginLeft: 14,
-    flex: 1,
+    height: 80,
+    paddingVertical: 16,
+    marginHorizontal: 28,
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    borderBottomWidth: 1,
+    borderColor: "#CDCDCD",
   },
-  text: {
-    fontSize: 24,
+  label: {
+    fontSize: 16,
     fontWeight: "600",
-    color: "#fff",
+    color: "#000000ff",
   },
 });

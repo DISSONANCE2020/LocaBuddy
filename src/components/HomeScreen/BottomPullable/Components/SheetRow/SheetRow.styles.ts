@@ -23,10 +23,10 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
   iconImage: {
-  width: "60%",
-  height: "60%",
-  resizeMode: "contain",
-},
+    width: "60%",
+    height: "60%",
+    resizeMode: "contain",
+  },
   info: {
     flexDirection: "column",
     alignItems: "flex-start",
@@ -39,5 +39,4 @@ export default StyleSheet.create({
     fontWeight: "400",
     color: "#000000ff",
   },
-
 });

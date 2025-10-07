@@ -1,4 +1,4 @@
-import type { PanelConfig, Section, PlacesSubSection } from "./types";
+import type { PanelConfig, Section, PlacesSubSection, Place } from "./types";
 import { icons } from "./icons";
 
 import DefaultTopper from "./Panels/Default/Topper/Topper";
@@ -40,3 +40,12 @@ export const PANELS: Record<Section, PanelConfig> = {
         Body: Placeholder,
     }
 }
+
+export const PLACES: Place[] = [
+    { id: "1", name: "Home" },
+    { id: "2", name: "Work" },
+    { id: "3", name: "Gym" },
+    { id: "4", name: "Supermarket" },
+    { id: "5", name: "Friend's House" },
+    { id: "6", name: "Park" },
+];

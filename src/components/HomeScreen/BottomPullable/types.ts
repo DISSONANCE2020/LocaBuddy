@@ -3,6 +3,7 @@ export type Section = "default" | "places" | "friends" | "wallet" | "settings";
 
 //PLACES SUBSECTIONS
 export type PlacesSubSection = "placesList" | "addPlace";
+export type Place = { id: string, name: string }
 
 export interface PanelConfig {
     label: string;
