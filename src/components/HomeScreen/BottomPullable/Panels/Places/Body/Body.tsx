@@ -1,16 +1,13 @@
 import React from "react";
 import { View, Text, Image, Pressable } from "react-native";
-import styles from "./PlacesContent.styles";
+import styles from "./Body.styles";
+import { icons } from "../../../icons"; 
 
-const icons = {
-  backArrow: require("../../../../../../../../assets/icons/ArrowBackIcon.png"),
-};
-
-interface PlacesContentProps {
+interface PlacesBodyProps {
   onBack?: () => void;
 }
 
-export default function PlacesContent({ onBack }: PlacesContentProps) {
+export default function PlacesBody({ onBack }: PlacesBodyProps) {
   return (
     <View style={styles.content}>
       <Pressable
@@ -20,7 +17,7 @@ export default function PlacesContent({ onBack }: PlacesContentProps) {
         accessibilityLabel='Go back'
       >
         <Image
-          source={icons.backArrow}
+          source={icons.back}
           style={styles.arrow}
           resizeMode='contain'
         />

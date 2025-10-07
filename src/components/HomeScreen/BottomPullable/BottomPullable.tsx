@@ -2,9 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { Dimensions, Animated, PanResponder } from "react-native";
 import styles from "./BottomPullable.styles";
 import SheetTopper from "./Components/SheetTopper/SheetTopper";
-import PlacesContent from "./Panels/Places/PlacesContent";
-import DefaultContent from "./Panels/Default/DefaultContent";
-import SheetRow from "./Components/SheetRow/SheetRow";
+import { useSheetState } from "./Hooks/useSheetState";
+import { PANELS } from "./registry";
 
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.36;
@@ -15,24 +14,12 @@ interface BottomPullableProps {
   onClose: () => void;
 }
 
-// Each sheet content item with icon and label (NEW)
-
-type Panel = "default" | "places" | "friends" | "wallet" | "settings";
-
-const icons = {
-  places: require("../../../../assets/icons/PlaceIcon.png"),
-  friends: require("../../../../assets/icons/FriendsIcon.png"),
-  wallet: require("../../../../assets/icons/WalletIcon.png"),
-  settings: require("../../../../assets/icons/SettingsIcon.png"),
-};
-
-export default function BottomPullable({
-  visible,
-  onClose,
-}: BottomPullableProps) {
+export default function BottomPullable({ visible }: BottomPullableProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selected, setSelected] = useState<Panel>("default");
   const animatedHeight = useRef(new Animated.Value(COLLAPSED_HEIGHT)).current;
+
+  const { section, selectSection, goBack } = useSheetState();
+  const { Topper: SelectedTopper, Body: SelectedBody } = PANELS[section];
 
   useEffect(() => {
     if (visible) {
@@ -99,42 +86,13 @@ export default function BottomPullable({
       {...panResponder.panHandlers}
     >
       <SheetTopper>
-        {selected === "places" ? (
-          <PlacesContent onBack={() => setSelected("default")} />
-        ) : (
-          <DefaultContent />
-        )}
+        <SelectedTopper onBack={goBack} />
       </SheetTopper>
-      <SheetRow
-        label='Places'
-        icon={icons.places}
-        selected={selected === "places"}
-        onPress={() => {
-          setSelected("places");
-        }}
+      <SelectedBody
+        selected={section}
+        setSelected={selectSection}
+        isExpanded={isExpanded}
       />
-      <SheetRow
-        label='Friends'
-        icon={icons.friends}
-        selected={selected === "friends"}
-        onPress={() => setSelected("friends")}
-      />
-      {isExpanded && (
-        <>
-          <SheetRow
-            label='Wallet'
-            icon={icons.wallet}
-            selected={selected === "wallet"}
-            onPress={() => setSelected("wallet")}
-          />
-          <SheetRow
-            label='Settings'
-            icon={icons.settings}
-            selected={selected === "settings"}
-            onPress={() => setSelected("settings")}
-          />
-        </>
-      )}
     </Animated.View>
   );
 }

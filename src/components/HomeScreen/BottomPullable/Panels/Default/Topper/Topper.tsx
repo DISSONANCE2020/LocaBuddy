@@ -4,9 +4,9 @@ import {
   Text,
   Image,
 } from "react-native";
-import styles from "./DefaultContent.styles";
+import styles from "./Topper.styles";
 
-export default function DefaultContent() {
+export default function DefaultTopper() {
   return (
       <View style={styles.row}>
         <Image
