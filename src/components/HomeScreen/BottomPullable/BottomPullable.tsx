@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { Dimensions, Animated, PanResponder } from "react-native";
 import styles from "./BottomPullable.styles";
 import SheetTopper from "./Components/SheetTopper/SheetTopper";
@@ -8,6 +8,7 @@ import { PANELS } from "./registry";
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.36;
 const EXPANDED_HEIGHT = height * 0.54;
+const ACTIVE_PANEL_HEIGHT = height * 0.72;
 
 interface BottomPullableProps {
   visible: boolean;
@@ -21,64 +22,50 @@ export default function BottomPullable({ visible }: BottomPullableProps) {
   const { section, selectSection, goBack } = useSheetState();
   const { Topper: SelectedTopper, Body: SelectedBody } = PANELS[section];
 
+  const sectionRef = useRef(section);
+  const isExpandedRef = useRef(isExpanded);
+  useEffect(() => { sectionRef.current = section; }, [section]);
+  useEffect(() => { isExpandedRef.current = isExpanded; }, [isExpanded]);
+
   useEffect(() => {
-    if (visible) {
+    if (!visible) return;
+    if (section === "default") {
       Animated.timing(animatedHeight, {
-        toValue: COLLAPSED_HEIGHT,
-        duration: 300,
+        toValue: isExpanded ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT,
+        duration: 200,
         useNativeDriver: false,
       }).start();
+      return;
     }
-  }, [visible]);
+    Animated.timing(animatedHeight, {
+      toValue: ACTIVE_PANEL_HEIGHT,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  }, [section, isExpanded, visible]);
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => false,
-      onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dy) > 12,
-
-      onPanResponderMove: (_, gesture) => {
-        if (gesture.dy < 0) {
-          const newHeight = COLLAPSED_HEIGHT + Math.abs(gesture.dy);
-          if (newHeight <= EXPANDED_HEIGHT) {
-            animatedHeight.setValue(newHeight);
-          }
-        } else if (gesture.dy > 0) {
-          const currentHeight = isExpanded ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT;
-          const newHeight = currentHeight - gesture.dy;
-          if (newHeight >= COLLAPSED_HEIGHT) {
-            animatedHeight.setValue(newHeight);
-          }
-        }
-      },
-
-      onPanResponderRelease: (_, gesture) => {
-        if (gesture.dy < -50) {
-          setIsExpanded(true);
-          Animated.timing(animatedHeight, {
-            toValue: EXPANDED_HEIGHT,
-            duration: 200,
-            useNativeDriver: false,
-          }).start();
-        } else if (gesture.dy > 50) {
-          setIsExpanded(false);
-          Animated.timing(animatedHeight, {
-            toValue: COLLAPSED_HEIGHT,
-            duration: 200,
-            useNativeDriver: false,
-          }).start();
-        } else {
-          const targetHeight = isExpanded ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT;
-          Animated.timing(animatedHeight, {
-            toValue: targetHeight,
-            duration: 200,
-            useNativeDriver: false,
-          }).start();
-        }
-      },
-    })
-  ).current;
-
-  if (!visible) return null;
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: () => false,
+        onMoveShouldSetPanResponder: (_, g) =>
+          sectionRef.current === "default" && Math.abs(g.dy) > 12,
+        onPanResponderMove: (_, g) => {
+          if (sectionRef.current !== "default") return;
+          const start = isExpandedRef.current ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT;
+          const next = Math.min(EXPANDED_HEIGHT, Math.max(COLLAPSED_HEIGHT, start - g.dy));
+          animatedHeight.setValue(next);
+        },
+        onPanResponderRelease: (_, g) => {
+          if (sectionRef.current !== "default") return;
+          const shouldExpand = g.dy < -40;
+          const toValue = shouldExpand ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT;
+          setIsExpanded(shouldExpand);
+          Animated.timing(animatedHeight, { toValue, duration: 200, useNativeDriver: false }).start();
+        },
+      }),
+    []
+  );
 
   return (
     <Animated.View
