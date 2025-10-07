@@ -1,8 +1,10 @@
 import { useState } from "react";
 import type { Section } from "../types";
+import type { PlacesSubSection } from "../types";
 
 export function useSheetState() {
     const [section, setSection] = useState<Section>("default");
+    const [ subSection, setSubSection ] = useState<PlacesSubSection>("addPlace");
 
     const selectSection = (next: Section) => {
         setSection(next);

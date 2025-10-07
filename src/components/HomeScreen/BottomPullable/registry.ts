@@ -1,4 +1,4 @@
-import type { PanelConfig, Section } from "./types";
+import type { PanelConfig, Section, PlacesSubSection } from "./types";
 import { icons } from "./icons";
 
 import DefaultTopper from "./Panels/Default/Topper/Topper";

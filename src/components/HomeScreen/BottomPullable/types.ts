@@ -1,4 +1,8 @@
+//GENERAL
 export type Section = "default" | "places" | "friends" | "wallet" | "settings";
+
+//PLACES SUBSECTIONS
+export type PlacesSubSection = "placesList" | "addPlace";
 
 export interface PanelConfig {
     label: string;

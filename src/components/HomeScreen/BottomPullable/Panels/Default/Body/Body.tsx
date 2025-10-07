@@ -2,17 +2,16 @@ import React from "react";
 import { View } from "react-native";
 import SheetRow from "../../../Components/SheetRow/SheetRow";
 import { icons } from "../../../icons";
-
-type Panel = "default" | "places" | "friends" | "wallet" | "settings";
+import { Section } from "../../../types";
 
 interface DefaultBodyProps {
-  selected: Panel;
-  setSelected: (p: Panel) => void;
+  section: Section;
+  setSelected: (p: Section) => void;
   isExpanded: boolean;
 }
 
 export default function DefaultBody({
-  selected,
+  section,
   setSelected,
   isExpanded,
 }: DefaultBodyProps) {
@@ -21,7 +20,7 @@ export default function DefaultBody({
       <SheetRow
         label='Places'
         icon={icons.places}
-        selected={selected === "places"}
+        selected={section === "places"}
         onPress={() => {
           setSelected("places");
         }}
@@ -29,7 +28,7 @@ export default function DefaultBody({
       <SheetRow
         label='Friends'
         icon={icons.friends}
-        selected={selected === "friends"}
+        selected={section === "friends"}
         onPress={() => setSelected("friends")}
       />
       {isExpanded && (
@@ -37,13 +36,13 @@ export default function DefaultBody({
           <SheetRow
             label='Wallet'
             icon={icons.wallet}
-            selected={selected === "wallet"}
+            selected={section === "wallet"}
             onPress={() => setSelected("wallet")}
           />
           <SheetRow
             label='Settings'
             icon={icons.settings}
-            selected={selected === "settings"}
+            selected={section === "settings"}
             onPress={() => setSelected("settings")}
           />
         </>
