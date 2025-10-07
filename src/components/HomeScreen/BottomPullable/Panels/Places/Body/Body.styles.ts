@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  info: {
+  subHeader: {
     height: 80,
     paddingVertical: 16,
     marginHorizontal: 28,

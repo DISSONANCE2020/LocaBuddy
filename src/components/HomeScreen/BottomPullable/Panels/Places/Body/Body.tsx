@@ -13,6 +13,10 @@ interface PlacesBodyProps {
 }
 
 export default function PlacesBody({}: PlacesBodyProps) {
+  const VISIBLE_COUNT = 5;
+  const visiblePlaces = PLACES.slice(0, VISIBLE_COUNT)
+
+
   return (
     <View>
       <SheetRow
@@ -23,11 +27,11 @@ export default function PlacesBody({}: PlacesBodyProps) {
         }}
       />
 
-      <View style={styles.info}>
+      <View style={styles.subHeader}>
         <Text style={styles.label}>Your Places</Text>
       </View>
 
-      {PLACES.map((p) => (
+      {visiblePlaces.map((p) => (
         <SheetRow
           key={p.id}
           label={p.name}

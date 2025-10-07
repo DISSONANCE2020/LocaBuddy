@@ -8,7 +8,7 @@ import { PANELS } from "./registry";
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.36;
 const EXPANDED_HEIGHT = height * 0.54;
-const ACTIVE_PANEL_HEIGHT = height * 0.72;
+const ACTIVE_PANEL_HEIGHT = height * 0.78;
 
 interface BottomPullableProps {
   visible: boolean;
