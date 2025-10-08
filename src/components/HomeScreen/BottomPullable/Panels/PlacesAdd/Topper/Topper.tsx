@@ -4,31 +4,34 @@ import styles from "./Topper.styles";
 import { icons } from "../../../icons";
 import { ActivePanelKey, Section } from "../../../types";
 
-interface PlacesTopperProps {
+interface PlacesAddTopperProps {
   onBack?: () => void;
   setActivePanel?: (key: ActivePanelKey) => void;
   setSelected?: (s: Section) => void;
 }
 
-export default function PlacesTopper({
+export default function PlacesAddTopper({
   onBack,
   setActivePanel,
   setSelected,
-}: PlacesTopperProps) {
+}: PlacesAddTopperProps) {
   return (
     <View style={styles.content}>
       <Pressable
         onPress={() => {
-          setSelected?.("default");
-          setActivePanel?.("default");
+          setSelected?.("places");
+          setActivePanel?.("places");
           onBack?.();
         }}
+        hitSlop={10}
+        accessibilityRole="button"
+        accessibilityLabel="Go back"
       >
         <Image source={icons.back} style={styles.arrow} resizeMode="contain" />
       </Pressable>
 
       <View style={styles.info}>
-        <Text style={styles.text}>Places</Text>
+        <Text style={styles.text}>Add a Place</Text>
       </View>
     </View>
   );

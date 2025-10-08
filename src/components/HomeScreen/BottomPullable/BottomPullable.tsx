@@ -3,7 +3,8 @@ import { Dimensions, Animated, PanResponder } from "react-native";
 import styles from "./BottomPullable.styles";
 import SheetTopper from "./Components/SheetTopper/SheetTopper";
 import { useSheetState } from "./Hooks/useSheetState";
-import { PANELS } from "./registry";
+import { Panels } from "./registry";
+import { ActivePanelKey, Section } from "./types";
 
 const { height } = Dimensions.get("window");
 const COLLAPSED_HEIGHT = height * 0.36;
@@ -11,57 +12,107 @@ const EXPANDED_HEIGHT = height * 0.54;
 const ACTIVE_PANEL_HEIGHT = height * 0.78;
 
 interface BottomPullableProps {
+  section: Section;
   visible: boolean;
+  isExpanded: boolean;
   onClose: () => void;
+  setSelected?: (s: Section) => void;
 }
 
-export default function BottomPullable({ visible }: BottomPullableProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const animatedHeight = useRef(new Animated.Value(COLLAPSED_HEIGHT)).current;
+export default function BottomPullable({
+  section,
+  isExpanded,
+}: BottomPullableProps) {
+  const [internalIsExpanded, setInternalIsExpanded] = useState(isExpanded);
 
-  const { section, selectSection, goBack } = useSheetState();
-  const { Topper: SelectedTopper, Body: SelectedBody } = PANELS[section];
+  const { selectSection, goBack } = useSheetState();
 
-  const sectionRef = useRef(section);
-  const isExpandedRef = useRef(isExpanded);
-  useEffect(() => { sectionRef.current = section; }, [section]);
-  useEffect(() => { isExpandedRef.current = isExpanded; }, [isExpanded]);
+  const setSectionAndPanel = React.useCallback(
+    (p: Section) => {
+      selectSection(p);
+      setActivePanel(p);
+    },
+    [selectSection]
+  );
+
+  const [activePanel, setActivePanel] = useState<ActivePanelKey>(section);
+
+  const normalizedActive: ActivePanelKey = (Panels as any)[activePanel]
+    ? activePanel
+    : "default";
+
+  const panelEntry = Panels[normalizedActive];
+  const { Topper: SelectedTopper, Body: SelectedBody } = panelEntry;
+
+  const isDefaultView = normalizedActive === "default";
+
+  const animatedHeight = useRef(
+    new Animated.Value(
+      isDefaultView
+        ? isExpanded
+          ? EXPANDED_HEIGHT
+          : COLLAPSED_HEIGHT
+        : ACTIVE_PANEL_HEIGHT
+    )
+  ).current;
+
+  const isDefaultViewRef = useRef(isDefaultView);
+  const isExpandedRef = useRef(internalIsExpanded);
 
   useEffect(() => {
-    if (!visible) return;
-    if (section === "default") {
+    isDefaultViewRef.current = isDefaultView;
+  }, [isDefaultView]);
+  useEffect(() => {
+    isExpandedRef.current = internalIsExpanded;
+  }, [internalIsExpanded]);
+
+  useEffect(() => {
+    setActivePanel(section);
+  }, [section]);
+
+  useEffect(() => {
+    if (isDefaultView) {
       Animated.timing(animatedHeight, {
-        toValue: isExpanded ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT,
+        toValue: internalIsExpanded ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT,
         duration: 200,
         useNativeDriver: false,
       }).start();
-      return;
+    } else {
+      Animated.timing(animatedHeight, {
+        toValue: ACTIVE_PANEL_HEIGHT,
+        duration: 200,
+        useNativeDriver: false,
+      }).start();
     }
-    Animated.timing(animatedHeight, {
-      toValue: ACTIVE_PANEL_HEIGHT,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-  }, [section, isExpanded, visible]);
+  }, [isDefaultView, internalIsExpanded]);
 
   const panResponder = useMemo(
     () =>
       PanResponder.create({
         onStartShouldSetPanResponder: () => false,
         onMoveShouldSetPanResponder: (_, g) =>
-          sectionRef.current === "default" && Math.abs(g.dy) > 12,
+          isDefaultViewRef.current && Math.abs(g.dy) > 12,
         onPanResponderMove: (_, g) => {
-          if (sectionRef.current !== "default") return;
-          const start = isExpandedRef.current ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT;
-          const next = Math.min(EXPANDED_HEIGHT, Math.max(COLLAPSED_HEIGHT, start - g.dy));
+          if (!isDefaultViewRef.current) return;
+          const start = isExpandedRef.current
+            ? EXPANDED_HEIGHT
+            : COLLAPSED_HEIGHT;
+          const next = Math.min(
+            EXPANDED_HEIGHT,
+            Math.max(COLLAPSED_HEIGHT, start - g.dy)
+          );
           animatedHeight.setValue(next);
         },
         onPanResponderRelease: (_, g) => {
-          if (sectionRef.current !== "default") return;
+          if (!isDefaultViewRef.current) return;
           const shouldExpand = g.dy < -40;
           const toValue = shouldExpand ? EXPANDED_HEIGHT : COLLAPSED_HEIGHT;
-          setIsExpanded(shouldExpand);
-          Animated.timing(animatedHeight, { toValue, duration: 200, useNativeDriver: false }).start();
+          setInternalIsExpanded(shouldExpand);
+          Animated.timing(animatedHeight, {
+            toValue,
+            duration: 200,
+            useNativeDriver: false,
+          }).start();
         },
       }),
     []
@@ -73,12 +124,19 @@ export default function BottomPullable({ visible }: BottomPullableProps) {
       {...panResponder.panHandlers}
     >
       <SheetTopper>
-        <SelectedTopper onBack={goBack} />
+        <SelectedTopper
+          onBack={goBack}
+          section={section}
+          isExpanded={internalIsExpanded}
+          setActivePanel={setActivePanel}
+          setSelected={setSectionAndPanel}
+        />
       </SheetTopper>
       <SelectedBody
-        selected={section}
-        setSelected={selectSection}
-        isExpanded={isExpanded}
+        section={section}
+        setSelected={setSectionAndPanel}
+        isExpanded={internalIsExpanded}
+        setActivePanel={setActivePanel}
       />
     </Animated.View>
   );
