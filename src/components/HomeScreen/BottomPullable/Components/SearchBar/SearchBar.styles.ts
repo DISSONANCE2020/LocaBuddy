@@ -1,24 +1,20 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  sheetContent: {
+  search: {
     height: 80,
     paddingVertical: 16,
     marginHorizontal: 28,
     backgroundColor: "transparent",
     borderBottomWidth: 1,
-    borderColor: "#CDCDCD",
-  },
-
-  rowContent: {
+    borderColor: "#11998E",
     flexDirection: "row",
   },
-
   icon: {
     width: 48,
     height: 48,
     borderRadius: 100,
-    backgroundColor: "#11998E",
+    backgroundColor: "#ffffffff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -27,13 +23,13 @@ export default StyleSheet.create({
     height: "60%",
     resizeMode: "contain",
   },
-  info: {
+  inputContainer: {
     alignItems: "flex-start",
     justifyContent: "center",
-    marginLeft: 12,
+    marginLeft: 8,
     flex: 1,
   },
-  label: {
+  input: {
     fontSize: 16,
     fontWeight: "400",
     color: "#000000ff",

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { View, Text } from "react-native";
+import React from "react";
+import { View, Text, Image } from "react-native";
 import SheetRow from "../../../Components/SheetRow/SheetRow";
 import { icons } from "../../../icons";
-import { ActivePanelKey, Section } from "../../../types";
+import { Section } from "../../../types";
 import { PlacesNear } from "../../../registry";
+import SearchBar from "../../../Components/SearchBar/SearchBar";
+import SheetSpace from "../../../Components/SheetSpace/SheetSpace";
 import styles from "./Body.styles";
 
 interface PlacesBodyProps {
@@ -13,21 +15,13 @@ interface PlacesBodyProps {
 }
 
 export default function PlacesAddBody({}: PlacesBodyProps) {
-  const VISIBLE_COUNT = 4;
-  const visiblePlaces = PlacesNear.slice(0, VISIBLE_COUNT)
-
+  const VISIBLE_COUNT = 3;
+  const visiblePlaces = PlacesNear.slice(0, VISIBLE_COUNT);
 
   return (
     <View>
-      
-      {/* ADD SEARCH BAR HERE */}
-
-      <SheetRow
-        label='Locate on Map'
-        icon={icons.places}
-        onPress={() => {
-        }}
-      />
+      <SearchBar icon={icons.placesGreen} />
+      <SheetRow label="Locate on Map" icon={icons.places} onPress={() => {}} />
 
       <View style={styles.subHeader}>
         <Text style={styles.label}>Near You</Text>

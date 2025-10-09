@@ -15,4 +15,17 @@ export default StyleSheet.create({
     fontWeight: "600",
     color: "#000000ff",
   },
+    icon: {
+    width: 48,
+    height: 48,
+    borderRadius: 100,
+    backgroundColor: "#ffffffff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+    iconImage: {
+    width: "60%",
+    height: "60%",
+    resizeMode: "contain",
+  },
 });

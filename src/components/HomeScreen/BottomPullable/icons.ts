@@ -6,4 +6,5 @@ export const icons = {
     back: require("../../../../assets/icons/ArrowBackIcon.png"), 
     add: require("../../../../assets/icons/AddIcon.png"),
     building: require("../../../../assets/icons/BuildingIcon.png"),
+    placesGreen: require("../../../../assets/icons/PlaceIconGreen.png"),
 }
