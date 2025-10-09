@@ -2,9 +2,8 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import { Dimensions, Animated, PanResponder } from "react-native";
 import styles from "./BottomSheet.styles";
 import SheetTopper from "./Components/SheetTopper/SheetTopper";
-import { useSheetState } from "./Hooks/useSheetState";
 import { Panels } from "./registry";
-import { ActivePanelKey, Section } from "./types";
+import { Section } from "./types";
 
 const { height } = Dimensions.get("window");
 
