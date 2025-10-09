@@ -15,6 +15,7 @@ interface BottomPullableProps {
   section: Section;
   visible: boolean;
   isExpanded: boolean;
+  onClose: () => void;
   setSelected?: (s: Section) => void;
 }
 
