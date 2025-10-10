@@ -4,9 +4,7 @@ import styles from "./SheetTopper.styles";
 
 export default function SheetTopper({ children }: { children?: ReactNode }) {
   return (
-    <View
-      style={styles.sheetTopper}
-    >
+    <View style={styles.sheetTopper}>
       <View style={styles.content}>{children}</View>
     </View>
   );

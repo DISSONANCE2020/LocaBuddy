@@ -4,10 +4,8 @@ import {
   TextInput,
   Image,
   ImageSourcePropType,
-  Pressable,
 } from "react-native";
 import styles from "./SearchBar.styles";
-import { LinearGradient } from "expo-linear-gradient";
 
 interface SheetRowProps {
   icon: ImageSourcePropType;
