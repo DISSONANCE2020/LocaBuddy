@@ -6,7 +6,7 @@ import { Section } from "../../../types";
 import { PlacesNear } from "../../../registry";
 import SearchBar from "../../../Components/SearchBar/SearchBar";
 import SheetSpace from "../../../Components/SheetSpace/SheetSpace";
-import styles from "./Body.styles";
+import styles from "./PlacesAddBody.styles";
 
 interface PlacesBodyProps {
   section: Section;

@@ -2,16 +2,16 @@ import type { PanelConfig, Section, ActivePanelKey } from "./types";
 import { icons } from "./icons";
 
 //IMPORTS FOR DEFAULT PANEL
-import LoginTopper from "./Panels/Login/Topper/Topper";
-import LoginBody from"./Panels/Login/Body/Body";
+import LoginTopper from "./Panels/Login/Topper/LoginTopper";
+import LoginBody from"./Panels/Login/Body/LoginBody";
 
 //IMPORTS FOR PLACES PANEL
-import SignupTopper from "./Panels/Signup/Topper/Topper";
-import SignupBody from "./Panels/Signup/Body/Body";
+import SignupTopper from "./Panels/Signup/Topper/SignupTopper";
+import SignupBody from "./Panels/Signup/Body/SignupBody";
 
 //IMPORTS FOR EVERYTHING UNDER PLACES PANEL
-import CreateAccountTopper from "./Panels/CreateAccount/Topper/Topper";
-import CreateAccountBody from "./Panels/CreateAccount/Body/Body";
+import CreateAccountTopper from "./Panels/CreateAccount/Topper/CreateAccountTopper";
+import CreateAccountBody from "./Panels/CreateAccount/Body/CreateAccountBody";
 
 const Placeholder = () => null;
 

@@ -4,7 +4,7 @@ import SheetRow from "../../../Components/SheetRow/SheetRow";
 import { icons } from "../../../icons";
 import { ActivePanelKey, Section } from "../../../types";
 import { PlacesUser } from "../../../registry";
-import styles from "./Body.styles";
+import styles from "./PlacesBody.styles";
 
 interface PlacesBodyProps {
   section: Section;

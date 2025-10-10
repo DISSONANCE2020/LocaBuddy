@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Pressable } from "react-native";
 import { Section } from "../../../types";
 import Button from "../../../Components/Button/Button";
-import styles from "./Body.styles";
+import styles from "./LoginBody.styles";
 
 interface LoginBodyProps {
   section: Section;

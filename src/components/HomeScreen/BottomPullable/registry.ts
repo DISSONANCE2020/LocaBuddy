@@ -2,16 +2,16 @@ import type { PanelConfig, Section, PlacesSubSection, Place, ActivePanelKey } fr
 import { icons } from "./icons";
 
 //IMPORTS FOR DEFAULT PANEL
-import DefaultTopper from "./Panels/Default/Topper/Topper";
-import DefaultBody from"./Panels/Default/Body/Body";
+import DefaultTopper from "./Panels/Default/Topper/DefaultTopper";
+import DefaultBody from"./Panels/Default/Body/DefaultBody";
 
 //IMPORTS FOR PLACES PANEL
-import PlacesTopper from "./Panels/Places/Topper/Topper";
-import PlacesBody from "./Panels/Places/Body/Body";
+import PlacesTopper from "./Panels/Places/Topper/PlacesTopper";
+import PlacesBody from "./Panels/Places/Body/PlacesBody";
 
 //IMPORTS FOR EVERYTHING UNDER PLACES PANEL
-import PlacesAddBody from "./Panels/PlacesAdd/Body/Body";
-import PlacesAddTopper from "./Panels/PlacesAdd/Topper/Topper";
+import PlacesAddBody from "./Panels/PlacesAdd/Body/PlacesAddBody";
+import PlacesAddTopper from "./Panels/PlacesAdd/Topper/PlacesAddTopper";
 
 const Placeholder = () => null;
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, Pressable } from "react-native";
-import styles from "./Topper.styles";
+import styles from "./SignupTopper.styles";
 import { icons } from "../../../icons";
 import { ActivePanelKey, Section } from "../../../types";
 

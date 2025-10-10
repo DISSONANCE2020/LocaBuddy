@@ -4,7 +4,7 @@ import {
   Text,
   Image,
 } from "react-native";
-import styles from "./Topper.styles";
+import styles from "./DefaultTopper.styles";
 
 export default function DefaultTopper() {
   return (

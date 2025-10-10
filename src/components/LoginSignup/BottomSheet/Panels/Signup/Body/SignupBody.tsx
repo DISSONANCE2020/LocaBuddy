@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import SheetRow from "../../../Components/SheetRow/SheetRow";
 import { icons } from "../../../icons";
 import { ActivePanelKey, Section } from "../../../types";
-import styles from "./Body.styles";
+import styles from "./SignupBody.styles";
 
 interface PlacesBodyProps {
   section: Section;
