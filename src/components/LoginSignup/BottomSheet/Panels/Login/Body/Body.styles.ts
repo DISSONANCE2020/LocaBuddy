@@ -1,33 +1,33 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  row: {
-    flexDirection: "row",
+  container: {
+    flex: 1,
+    marginHorizontal: 28,
+    marginBottom: 28,
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  topContainer: {
+    alignItems: "center",
+    gap: 12,
+  },
+  bottomRowContainer: {
     alignItems: "center",
   },
-  profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 100,
-    backgroundColor: "#fff",
-    borderWidth: 2,
-    borderColor: "rgba(255,255,255,0.7)",
+  bottomRow: {
+    flexDirection: "row",
   },
-  info: {
-    marginLeft: 14,
-    flex: 1,
-  },
-  username: {
-    fontSize: 24,
+  topText: {
+    fontSize: 16,
     fontWeight: "600",
-    color: "#fff",
-    marginBottom: 2,
+    color: "#11998E",
   },
-  locationDetails: {
-    gap: 0,
+  bottomText: {
+    fontSize: 16,
   },
-  locationText: {
-    fontSize: 12,
-    color: "rgba(255,255,255,0.9)",
+  linkText: {
+    fontSize: 16,
+    color: "#25A2FC",
   },
 });

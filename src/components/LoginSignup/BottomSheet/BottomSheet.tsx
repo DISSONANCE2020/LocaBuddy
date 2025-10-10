@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
-import { Dimensions, Animated, PanResponder } from "react-native";
+import React, { useRef, useEffect } from "react";
+import { Dimensions, Animated } from "react-native";
 import styles from "./BottomSheet.styles";
 import SheetTopper from "./Components/SheetTopper/SheetTopper";
 import { Panels } from "./registry";
@@ -7,7 +7,7 @@ import { Section } from "./types";
 
 const { height } = Dimensions.get("window");
 
-const SHEET_HEIGHT = height * 0.66;
+const SHEET_HEIGHT = height * 0.48;
 
 interface BottomSheetProps {
   section: Section;
