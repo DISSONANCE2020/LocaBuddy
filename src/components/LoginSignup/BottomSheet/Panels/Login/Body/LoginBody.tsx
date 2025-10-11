@@ -10,7 +10,7 @@ interface LoginBodyProps {
   isExpanded: boolean;
 }
 
-export default function LoginBody({}: LoginBodyProps) {
+export default function LoginBody({ section, setSelected }: LoginBodyProps) {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -22,7 +22,7 @@ export default function LoginBody({}: LoginBodyProps) {
       <View style={styles.bottomRowContainer}>
         <View style={styles.bottomRow}>
           <Text style={styles.bottomText}>Don't have an account? </Text>
-          <Pressable>
+          <Pressable onPress={() => setSelected("signup")}>
             <Text
               style={[styles.linkText, { textDecorationLine: "underline" }]}
             >

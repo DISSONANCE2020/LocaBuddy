@@ -1,18 +1,33 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  subHeader: {
-    height: 80,
-    paddingVertical: 16,
+  container: {
+    flex: 1,
     marginHorizontal: 28,
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    borderBottomWidth: 1,
-    borderColor: "#CDCDCD",
+    marginBottom: 28,
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
-  label: {
+  topContainer: {
+    alignItems: "center",
+    gap: 12,
+  },
+  bottomRowContainer: {
+    alignItems: "center",
+  },
+  bottomRow: {
+    flexDirection: "row",
+  },
+  topText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#000000ff",
+    color: "#11998E",
+  },
+  bottomText: {
+    fontSize: 16,
+  },
+  linkText: {
+    fontSize: 16,
+    color: "#25A2FC",
   },
 });
