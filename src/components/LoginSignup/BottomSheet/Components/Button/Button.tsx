@@ -5,11 +5,12 @@ import styles from "./Button.styles";
 
 interface ButtonProps {
   label: string;
+  onPress?: () => void;
 }
 
-export default function Button({ label }: ButtonProps) {
+export default function Button({ label, onPress }: ButtonProps) {
   return (
-    <Pressable
+    <Pressable onPress={onPress}
       style={({ pressed }) => [
         styles.sheetContent,
         pressed && { opacity: 0.95 },

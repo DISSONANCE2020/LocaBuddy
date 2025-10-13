@@ -12,6 +12,9 @@ export default StyleSheet.create({
     alignItems: "center",
     gap: 12,
   },
+  buttonContainer: {
+    width: "100%",
+  },
   bottomRowContainer: {
     alignItems: "center",
   },

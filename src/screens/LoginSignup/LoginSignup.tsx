@@ -7,7 +7,6 @@ import styles from "./LoginSignup.styles";
 
 export default function LoginSignupScreen() {
   const [section, setSection] = useState<Section>("login");
-  const [visible, setVisible] = useState(true);
 
   return (
     <View style={[styles.container, { flex: 1 }]}>
@@ -15,7 +14,7 @@ export default function LoginSignupScreen() {
         <Background/>
         <BottomSheet
           section={section}
-          visible={visible}
+          visible={true}
           onChangeSection={setSection}
         />
       </View>

@@ -10,14 +10,14 @@ interface SignupBodyProps {
   isExpanded: boolean;
 }
 
-export default function SignupBody({section, setSelected}: SignupBodyProps) {
+export default function SignupBody({ section, setSelected }: SignupBodyProps) {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <Text style={styles.topText}>
           Connect your Metamask Wallet to register!
         </Text>
-        <Button label={"CONNECT METAMASK WALLET"} />
+          <Button label={"CONNECT METAMASK WALLET"} onPress={() => setSelected("createAccount")}/>
       </View>
       <View style={styles.bottomRowContainer}>
         <View style={styles.bottomRow}>

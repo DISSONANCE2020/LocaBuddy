@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { Dimensions, Animated } from "react-native";
 import styles from "./BottomSheet.styles";
 import SheetTopper from "./Components/SheetTopper/SheetTopper";
@@ -6,8 +6,8 @@ import { Panels } from "./registry";
 import { Section } from "./types";
 
 const { height } = Dimensions.get("window");
-
 const SHEET_HEIGHT = height * 0.48;
+const CREATE_ACCOUNT_HEIGHT = height * 0.78;
 
 interface BottomSheetProps {
   section: Section;
@@ -20,13 +20,16 @@ export default function BottomSheet({
   visible = true,
   onChangeSection,
 }: BottomSheetProps) {
-  if (!Panels[section]) {
-    section = "login";
-  }
+  const safeSection: Section = useMemo(
+    () => (Panels[section] ? section : "login"),
+    [section]
+  );
 
-  const { Topper, Body } = Panels[section];
+  const { Topper, Body } = Panels[safeSection];
 
-  const opacity = useRef(new Animated.Value(0)).current;
+  const opacity = useRef(new Animated.Value(0)).current; 
+  const sheetHeight = useRef(new Animated.Value(SHEET_HEIGHT)).current; 
+
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: visible ? 1 : 0,
@@ -35,18 +38,26 @@ export default function BottomSheet({
     }).start();
   }, [visible, opacity]);
 
+  useEffect(() => {
+    const toValue =
+      safeSection === "createAccount" ? CREATE_ACCOUNT_HEIGHT : SHEET_HEIGHT;
+    Animated.timing(sheetHeight, {
+      toValue,
+      duration: 220,
+      useNativeDriver: false,
+    }).start();
+  }, [safeSection, sheetHeight]);
+
   const setSection = (s: Section) => {
-    if (s !== section) onChangeSection?.(s);
+    if (s !== safeSection) onChangeSection?.(s);
   };
 
   return (
-    <Animated.View
-      style={[styles.sheet, { height: SHEET_HEIGHT }, { opacity }]}
-    >
+    <Animated.View style={[styles.sheet, { height: sheetHeight }]}>
       <SheetTopper>
-        <Topper section={section} setSelected={setSection} />
+        <Topper section={safeSection} setSelected={setSection} />
       </SheetTopper>
-      <Body section={section} setSelected={setSection} />
+      <Body section={safeSection} setSelected={setSection} />
     </Animated.View>
   );
 }
