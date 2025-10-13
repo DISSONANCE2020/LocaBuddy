@@ -7,7 +7,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     paddingTop: 8,
     paddingBottom: 12,
-    gap: 8,
+    gap: 24,
   },
   avatarWrapper: {
     width: 132,
@@ -22,8 +22,8 @@ export default StyleSheet.create({
     marginBottom: 8,
   },
   addIcon: {
-    width: 40,
-    height: 40,
+    width: 96,
+    height: 96,
   },
   avatarImage: {
     width: "100%",

@@ -1,11 +1,18 @@
 import React, { ReactNode } from "react";
-import { View } from "react-native";
+import { Animated } from "react-native";
 import styles from "./SheetTopper.styles";
 
-export default function SheetTopper({ children }: { children?: ReactNode }) {
+interface Props {
+  children?: ReactNode;
+  height?: number | Animated.Value;
+}
+
+export default function SheetTopper({ children, height }: Props) {
   return (
-    <View style={styles.sheetTopper}>
-      <View style={styles.content}>{children}</View>
-    </View>
+    <Animated.View
+      style={[styles.sheetTopper, height != null ? { height } : null]}
+    >
+      <Animated.View style={styles.content}>{children}</Animated.View>
+    </Animated.View>
   );
 }

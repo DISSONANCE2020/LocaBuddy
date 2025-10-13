@@ -1,8 +1,12 @@
 import React from "react";
-import { View } from "react-native";
-import SheetRow from "../../../Components/SheetRow/SheetRow";
-import { icons } from "../../../icons";
+import { View, Text, Pressable } from "react-native";
+import Button from "../../../Components/Button/Button";
+import ButtonGrey from "../../../Components/ButtonGrey/ButtonGrey";
+import SheetSpace from "../../../Components/SheetSpace/SheetSpace";
+import InputField from "../../../Components/InputField/InputField";
+import TextField from "../../../Components/TextField/TextField";
 import { Section } from "../../../types";
+import styles from "./CreateAccountBody.styles";
 
 interface DefaultBodyProps {
   section: Section;
@@ -16,7 +20,20 @@ export default function CreateAccountTopper({
   isExpanded,
 }: DefaultBodyProps) {
   return (
-    <View>
+    <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <TextField label='Your Metamask Wallet ID' placeholder='Your Metamask ID' />
+        <InputField label='Username' placeholder='Username' />
+        <SheetSpace />
+        <Button
+          label={"CREATE YOUR ACCOUNT"}
+          onPress={() => setSelected("createAccount")}
+        />
+        <ButtonGrey
+          label={"CANCEL"}
+          onPress={() => setSelected("login")}
+        />
+      </View>
     </View>
   );
 }

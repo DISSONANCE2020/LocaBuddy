@@ -17,8 +17,8 @@ interface InputFieldProps extends TextInputProps {
 const InputField = forwardRef<TextInput, InputFieldProps>(
   ({ label = "Label", placeholder = "Placeholder" }, ref) => {
     return (
-      <View>
-        {!!label && <Text>{label}</Text>}
+      <View style={styles.container}>
+        {!!label && <Text style={styles.label}>{label}</Text>}
         <TextInput
           ref={ref}
           placeholder={placeholder}

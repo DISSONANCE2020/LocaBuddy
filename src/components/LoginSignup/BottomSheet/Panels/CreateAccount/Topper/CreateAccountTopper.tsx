@@ -28,14 +28,13 @@ export default function CreateAccountTopper() {
     <View style={styles.content}>
       <Pressable
         onPress={pickImage}
-        accessibilityRole="button"
-        accessibilityLabel="Upload profile photo"
+        accessibilityRole='button'
+        accessibilityLabel='Upload profile photo'
         style={styles.avatarWrapper}
         android_ripple={{ color: "rgba(0,0,0,0.06)", borderless: true }}
       >
-        <Image source={icons.add} style={styles.addIcon}/>
+        <Image source={icons.add} style={styles.addIcon} />
       </Pressable>
-
       <Text style={styles.text}>CREATE YOUR ACCOUNT</Text>
     </View>
   );

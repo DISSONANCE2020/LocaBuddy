@@ -2,16 +2,22 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   label: {
-    fontSize: 16,
+    color: "#11998E",
+    fontWeight: "600",
+  },
+  container: {
+    width: "100%",
+    gap: 8,
   },
   input: {
+    height: 60,
     alignItems: "center",
     borderWidth: 1,
     borderRadius: 16,
-    borderColor: "#cdcdcd",
+    borderColor: "#11998E",
     flexDirection: "row",
     fontSize: 16,
     fontWeight: "400",
-    color: "#000000ff",
+    color: "#11998E",
   },
 });
