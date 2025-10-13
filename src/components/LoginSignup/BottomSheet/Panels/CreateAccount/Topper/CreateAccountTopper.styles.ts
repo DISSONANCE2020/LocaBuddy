@@ -5,9 +5,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 8,
-    paddingBottom: 12,
-    gap: 24,
+    gap: 16,
   },
   avatarWrapper: {
     width: 132,

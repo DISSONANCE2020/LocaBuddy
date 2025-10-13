@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useMemo } from "react";
-import { Dimensions, Animated } from "react-native";
+import React, { useRef, useEffect, useMemo, useState } from "react";
+import { Dimensions, Animated, Keyboard, Platform } from "react-native";
 import styles from "./BottomSheet.styles";
 import SheetTopper from "./Components/SheetTopper/SheetTopper";
 import { Panels } from "./registry";
@@ -8,6 +8,7 @@ import { Section } from "./types";
 const { height } = Dimensions.get("window");
 const SHEET_HEIGHT = height * 0.48;
 const CREATE_ACCOUNT_HEIGHT = height * 0.84;
+const KEYBOARD_ACTIVE_HEIGHT = height;
 
 const TOPPER_DEFAULT_HEIGHT = 120;
 const TOPPER_CREATE_ACCOUNT_HEIGHT = 280;
@@ -37,17 +38,34 @@ export default function BottomSheet({
     new Animated.Value(TOPPER_DEFAULT_HEIGHT)
   ).current;
 
-  useEffect(() => {
-    Animated.timing(opacity, {
-      toValue: visible ? 1 : 0,
-      duration: 180,
-      useNativeDriver: true,
-    }).start();
-  }, [visible, opacity]);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
+    const showEvent =
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent =
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+    const showSub = Keyboard.addListener(showEvent, () =>
+      setKeyboardVisible(true)
+    );
+    const hideSub = Keyboard.addListener(hideEvent, () =>
+      setKeyboardVisible(false)
+    );
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    const isCreate = safeSection === "createAccount";
     const toValue =
-      safeSection === "createAccount" ? CREATE_ACCOUNT_HEIGHT : SHEET_HEIGHT;
+      isCreate && keyboardVisible
+        ? KEYBOARD_ACTIVE_HEIGHT
+        : isCreate
+        ? CREATE_ACCOUNT_HEIGHT
+        : SHEET_HEIGHT;
+
     Animated.timing(sheetHeight, {
       toValue,
       duration: 220,
@@ -58,12 +76,13 @@ export default function BottomSheet({
       safeSection === "createAccount"
         ? TOPPER_CREATE_ACCOUNT_HEIGHT
         : TOPPER_DEFAULT_HEIGHT;
+
     Animated.timing(topperHeight, {
       toValue: topperTo,
       duration: 220,
       useNativeDriver: false,
     }).start();
-  }, [safeSection, sheetHeight]);
+  }, [safeSection, keyboardVisible]);
 
   const setSection = (s: Section) => {
     if (s !== safeSection) onChangeSection?.(s);
