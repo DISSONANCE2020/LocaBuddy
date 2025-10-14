@@ -2,6 +2,7 @@
   "expo": {
     "name": "LocaBuddy",
     "slug": "LocaBuddy",
+    "scheme": "locabuddy",
     "updates": { "enabled": false, "checkAutomatically": "NEVER" },
     "version": "1.0.0",
     "orientation": "portrait",

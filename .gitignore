@@ -34,7 +34,6 @@ yarn-error.*
 .env*.local
 
 .env
-
 .env.backup
 
 # typescript
@@ -46,3 +45,4 @@ yarn-error.*
 
 # secrets
 android/gradle.properties
+.env.backup

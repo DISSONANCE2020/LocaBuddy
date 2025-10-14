@@ -21,7 +21,7 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   useEffect(() => {
     const init = async () => {
       const signClient = await SignClient.init({
-        projectId: "YOUR_PROJECT_ID", // WalletConnect Cloud project ID
+        projectId: "YOUR_PROJECT_ID",
         metadata: {
           name: "LocaBuddy",
           description: "My Expo app",
