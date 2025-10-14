@@ -13,33 +13,46 @@ buildscript {
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven {
-            url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
-            authentication { basic(BasicAuthentication) }
-            credentials {
-                username = "mapbox"
-                password = project.findProperty("MAPBOX_DOWNLOADS_TOKEN")
-                        ?: System.getenv("MAPBOX_DOWNLOADS_TOKEN")
-            }
-        }
-    }
-}
-
-repositories {
+  repositories {
     google()
     mavenCentral()
     maven {
-        url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
-        authentication { basic(BasicAuthentication) }
-        credentials {
-            username = "mapbox"
-            password = project.findProperty("MAPBOX_DOWNLOADS_TOKEN")
-                    ?: System.getenv("MAPBOX_DOWNLOADS_TOKEN")
-        }
+      url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+      authentication { basic(BasicAuthentication) }
+      credentials {
+        username = "mapbox"
+        password = project.findProperty("MAPBOX_DOWNLOADS_TOKEN")
+                ?: System.getenv("MAPBOX_DOWNLOADS_TOKEN")
+      }
     }
+  }
+}
+
+subprojects {
+  afterEvaluate { project ->
+    if (project.plugins.hasPlugin("org.jetbrains.kotlin.android") ||
+        project.plugins.hasPlugin("kotlin-android")) {
+      project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+          jvmTarget = "17"
+        }
+      }
+    }
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  maven {
+    url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+    authentication { basic(BasicAuthentication) }
+    credentials {
+      username = "mapbox"
+      password = project.findProperty("MAPBOX_DOWNLOADS_TOKEN")
+              ?: System.getenv("MAPBOX_DOWNLOADS_TOKEN")
+    }
+  }
 }
 
 apply plugin: "expo-root-project"
