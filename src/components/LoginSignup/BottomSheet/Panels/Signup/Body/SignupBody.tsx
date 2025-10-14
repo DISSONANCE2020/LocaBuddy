@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Alert } from "react-native";
 import { Section } from "../../../types";
 import Button from "../../../Components/Button/Button";
 import styles from "./SignupBody.styles";
@@ -13,14 +13,24 @@ interface SignupBodyProps {
 }
 
 export default function SignupBody({ section, setSelected }: SignupBodyProps) {
-  const { connectWallet, account } = useWallet();
+  const { connectWallet, account, isReady } = useWallet();
 
   const handleConnectWallet = async () => {
-    try {
-      await connectWallet();
+    const approved = await new Promise<boolean>((resolve) => {
+      Alert.alert(
+        "Connect wallet",
+        "Would you like to connect your MetaMask wallet to LocaBuddy?",
+        [
+          { text: "Cancel", style: "cancel", onPress: () => resolve(false) },
+          { text: "Connect", onPress: () => resolve(true) },
+        ]
+      );
+    });
+    if (!approved) return;
+
+    const addr = await connectWallet();
+    if (addr) {
       setSelected("createAccount");
-    } catch (err) {
-      console.log("Wallet connection failed:", err);
     }
   };
 
@@ -33,7 +43,7 @@ export default function SignupBody({ section, setSelected }: SignupBodyProps) {
         <Button
           label={"CONNECT METAMASK WALLET"}
           onPress={handleConnectWallet}
-          disabled={!!account} 
+          disabled={!isReady || !!account}
         />
       </View>
       <View style={styles.bottomRowContainer}>

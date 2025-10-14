@@ -1,71 +1,170 @@
-import React, { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import SignClient from "@walletconnect/sign-client";
 import type { SessionTypes } from "@walletconnect/types";
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 
 interface WalletContextType {
   client: InstanceType<typeof SignClient> | null;
-  connectWallet: () => Promise<void>;
+  connectWallet: () => Promise<string | null>;
   disconnectWallet: () => Promise<void>;
   account: string | null;
   session: SessionTypes.Struct | null;
+  isReady: boolean;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-export const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [client, setClient] = useState<InstanceType<typeof SignClient> | null>(null);
+export const WalletProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [client, setClient] = useState<InstanceType<typeof SignClient> | null>(
+    null
+  );
   const [account, setAccount] = useState<string | null>(null);
   const [session, setSession] = useState<SessionTypes.Struct | null>(null);
+  const [isReady, setIsReady] = useState(false);
+
+  const initPromiseRef = useRef<Promise<InstanceType<typeof SignClient>> | null>(null);
+
+  const WC_PROJECT_ID =
+    process.env.EXPO_PUBLIC_WALLETCONNECT_PROJECT_ID ??
+    process.env.WALLETCONNECT_PROJECT_ID ??
+    "YOUR_PROJECT_ID";
 
   useEffect(() => {
     const init = async () => {
-      const signClient = await SignClient.init({
-        projectId: "YOUR_PROJECT_ID",
+      if (initPromiseRef.current) return;
+      initPromiseRef.current = SignClient.init({
+        projectId: WC_PROJECT_ID,
         metadata: {
           name: "LocaBuddy",
-          description: "My Expo app",
+          description: "LocaBuddy App",
           url: "https://example.com",
           icons: [],
         },
       });
-      setClient(signClient);
+      try {
+        const signClient = await initPromiseRef.current;
+        setClient(signClient);
+        setIsReady(true);
+      } catch (e) {
+        console.warn("WalletConnect init failed:", e);
+        setIsReady(false);
+      }
     };
     init();
   }, []);
 
-  const connectWallet = async () => {
+  // Restore previous session if any
+  useEffect(() => {
     if (!client) return;
+    const sessions = client.session.getAll();
+    if (sessions.length) {
+      const s = sessions[0];
+      setSession(s);
+      const acc = s.namespaces.eip155?.accounts?.[0]?.split(":")[2] ?? null;
+      setAccount(acc);
+    }
+  }, [client]);
 
-    const { uri, approval } = await client.connect({
-      requiredNamespaces: {
-        eip155: {
-          methods: ["eth_sendTransaction", "personal_sign", "eth_signTypedData"],
-          chains: ["eip155:1"],
-          events: ["chainChanged", "accountsChanged"],
+  // React to account/chain changes and session delete
+  useEffect(() => {
+    if (!client) return;
+    const onUpdate = (args: any) => {
+      const namespaces = args?.params?.namespaces ?? {};
+      const acc = namespaces.eip155?.accounts?.[0]?.split(":")[2] ?? null;
+      setAccount(acc);
+    };
+    const onDelete = () => {
+      setSession(null);
+      setAccount(null);
+    };
+    client.on("session_update", onUpdate);
+    client.on("session_delete", onDelete);
+    return () => {
+      client.off("session_update", onUpdate);
+      client.off("session_delete", onDelete);
+    };
+  }, [client]);
+
+  const connectWallet = async (): Promise<string | null> => {
+    // Ensure client is ready
+    const readyClient =
+      client ??
+      (initPromiseRef.current ? await initPromiseRef.current : null);
+
+    if (!readyClient) {
+      console.warn("WalletConnect client not ready");
+      return null;
+    }
+
+    if (!WC_PROJECT_ID || WC_PROJECT_ID === "YOUR_PROJECT_ID") {
+      console.warn("Missing WalletConnect projectId");
+      return null;
+    }
+
+    try {
+      const { uri, approval } = await readyClient.connect({
+        requiredNamespaces: {
+          eip155: {
+            methods: ["eth_sendTransaction", "personal_sign", "eth_signTypedData"],
+            chains: ["eip155:1"],
+            events: ["chainChanged", "accountsChanged"],
+          },
         },
-      },
-    });
+      });
 
-    if (uri) Linking.openURL(uri);
+      if (uri) {
+        const deepLink = `metamask://wc?uri=${encodeURIComponent(uri)}`;
+        try {
+          const canOpenMM = await Linking.canOpenURL("metamask://");
+          if (canOpenMM) {
+            await Linking.openURL(deepLink);
+          } else {
+            await Linking.openURL(uri); // wc: URI fallback
+          }
+        } catch {
+          await Linking.openURL(uri);
+        }
+      }
 
-    const sessionData = await approval();
-    setSession(sessionData);
+      const sessionData = await approval(); // waits until user approves in MetaMask
+      setSession(sessionData);
 
-    const walletAccount = sessionData.namespaces.eip155.accounts?.[0]?.split(":")[2] ?? null;
-    setAccount(walletAccount);
+      const walletAccount =
+        sessionData.namespaces.eip155?.accounts?.[0]?.split(":")[2] ?? null;
+      setAccount(walletAccount);
+
+      return walletAccount ?? null;
+    } catch (err) {
+      // User rejected or connection failed
+      console.log("Wallet connection failed:", err);
+      return null;
+    }
   };
 
   const disconnectWallet = async () => {
     if (session && client) {
-      await client.disconnect({ topic: session.topic, reason: { code: 6000, message: "User disconnected" } });
+      await client.disconnect({
+        topic: session.topic,
+        reason: { code: 6000, message: "User disconnected" },
+      });
     }
     setSession(null);
     setAccount(null);
   };
 
   return (
-    <WalletContext.Provider value={{ client, connectWallet, disconnectWallet, account, session }}>
+    <WalletContext.Provider
+      value={{ client, connectWallet, disconnectWallet, account, session, isReady }}
+    >
       {children}
     </WalletContext.Provider>
   );

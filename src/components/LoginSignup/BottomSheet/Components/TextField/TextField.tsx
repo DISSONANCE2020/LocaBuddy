@@ -6,7 +6,7 @@ interface TextFieldProps {
   label?: string;
   value?: string | number | null | undefined;
   placeholder?: string;
-  numberOfLines?: number; // defaults to 1
+  numberOfLines?: number;
 }
 
 export default function TextField({
