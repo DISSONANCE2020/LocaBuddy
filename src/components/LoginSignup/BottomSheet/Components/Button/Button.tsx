@@ -6,6 +6,7 @@ import styles from "./Button.styles";
 interface ButtonProps {
   label: string;
   onPress?: () => void;
+  disabled?: boolean;
 }
 
 export default function Button({ label, onPress }: ButtonProps) {
