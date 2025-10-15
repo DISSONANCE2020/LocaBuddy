@@ -11,7 +11,8 @@ interface ButtonProps {
 
 export default function Button({ label, onPress }: ButtonProps) {
   return (
-    <Pressable onPress={onPress}
+    <Pressable
+      onPress={onPress}
       style={({ pressed }) => [
         styles.sheetContent,
         pressed && { opacity: 0.95 },

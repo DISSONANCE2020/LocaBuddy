@@ -15,7 +15,16 @@ interface InputFieldProps extends TextInputProps {
 }
 
 const InputField = forwardRef<TextInput, InputFieldProps>(
-  ({ label = "Label", placeholder = "Placeholder" }, ref) => {
+  (
+    {
+      label = "Label",
+      placeholder = "Placeholder",
+      value,
+      onChangeText,
+      ...rest
+    },
+    ref
+  ) => {
     return (
       <View style={styles.container}>
         {!!label && <Text style={styles.label}>{label}</Text>}
@@ -24,10 +33,12 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
           placeholder={placeholder}
           placeholderTextColor={"#cdcdcd"}
           style={styles.input}
+          value={value}
+          onChangeText={onChangeText}
+          {...rest}
         />
       </View>
     );
   }
 );
-
 export default InputField;

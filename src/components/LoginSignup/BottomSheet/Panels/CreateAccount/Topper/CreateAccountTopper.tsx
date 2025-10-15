@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { View, Text, Image, Pressable, Platform } from "react-native";
+import React, { useMemo, useState } from "react";
+import { View, Text, Image, Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import styles from "./CreateAccountTopper.styles";
 import { icons } from "../../../icons";
+import { useWallet } from "../../../../../../lib/wallet";
 
 export default function CreateAccountTopper() {
+  const { account } = useWallet();
   const [uri, setUri] = useState<string | null>(null);
 
   const pickImage = async () => {
@@ -24,6 +26,13 @@ export default function CreateAccountTopper() {
     }
   };
 
+  // Use picked image if present, else deterministic static avatar by wallet
+  const avatarUri = useMemo(() => {
+    if (uri) return uri;
+    if (!account) return null;
+    return `https://api.dicebear.com/7.x/identicon/png?size=128&seed=${encodeURIComponent(account)}`;
+  }, [uri, account]);
+
   return (
     <View style={styles.content}>
       <Pressable
@@ -33,7 +42,14 @@ export default function CreateAccountTopper() {
         style={styles.avatarWrapper}
         android_ripple={{ color: "rgba(0,0,0,0.06)", borderless: true }}
       >
-        <Image source={icons.add} style={styles.addIcon} />
+        {avatarUri ? (
+          <Image
+            source={{ uri: avatarUri }}
+            style={styles.fallbackImage}
+          />
+        ) : (
+          <Image source={icons.add} style={styles.addIcon} />
+        )}
       </Pressable>
       <Text style={styles.text}>CREATE YOUR ACCOUNT</Text>
     </View>

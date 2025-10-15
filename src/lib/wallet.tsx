@@ -62,7 +62,6 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({
     init();
   }, []);
 
-  // Restore previous session if any
   useEffect(() => {
     if (!client) return;
     const sessions = client.session.getAll();
@@ -74,7 +73,6 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [client]);
 
-  // React to account/chain changes and session delete
   useEffect(() => {
     if (!client) return;
     const onUpdate = (args: any) => {
@@ -95,7 +93,6 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({
   }, [client]);
 
   const connectWallet = async (): Promise<string | null> => {
-    // Ensure client is ready
     const readyClient =
       client ??
       (initPromiseRef.current ? await initPromiseRef.current : null);
@@ -111,11 +108,13 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     try {
+      const CHAIN_ID = (process.env.EXPO_PUBLIC_EVM_CHAIN_ID ?? "84532").trim();
+      const CHAIN_REF = `eip155:${CHAIN_ID}`;
       const { uri, approval } = await readyClient.connect({
         requiredNamespaces: {
           eip155: {
-            methods: ["eth_sendTransaction", "personal_sign", "eth_signTypedData"],
-            chains: ["eip155:1"],
+            methods: ["eth_sendTransaction", "personal_sign", "eth_signTypedData", "eth_call"],
+            chains: [CHAIN_REF],
             events: ["chainChanged", "accountsChanged"],
           },
         },
@@ -128,14 +127,14 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({
           if (canOpenMM) {
             await Linking.openURL(deepLink);
           } else {
-            await Linking.openURL(uri); // wc: URI fallback
+            await Linking.openURL(uri);
           }
         } catch {
           await Linking.openURL(uri);
         }
       }
 
-      const sessionData = await approval(); // waits until user approves in MetaMask
+      const sessionData = await approval();
       setSession(sessionData);
 
       const walletAccount =
@@ -144,7 +143,6 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({
 
       return walletAccount ?? null;
     } catch (err) {
-      // User rejected or connection failed
       console.log("Wallet connection failed:", err);
       return null;
     }

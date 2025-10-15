@@ -23,6 +23,11 @@ export default StyleSheet.create({
     width: 96,
     height: 96,
   },
+  fallbackImage: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#ffffffff",
+  },
   avatarImage: {
     width: "100%",
     height: "100%",
